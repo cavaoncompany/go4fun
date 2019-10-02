@@ -39,7 +39,7 @@ export default {
 		}
 	},
 	
-	async asyncData(error) {
+	async asyncData({error}) {
 		try {
 			let {data} = await axios.get(`${apiUrl}/api/aboutus`);
 			let carouselData = await axios.get(`${apiUrl}/api/getHeroBannerProducts`);
