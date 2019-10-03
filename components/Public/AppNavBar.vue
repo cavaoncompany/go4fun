@@ -2,8 +2,8 @@
    
     <b-container fluid id="navBar">
         <b-container style="position:relative">
-            <b-navbar toggleable="sm">
-                <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
+            <b-navbar toggleable="md">
+                <b-navbar-toggle target="nav-text-collapse" class=""></b-navbar-toggle>
                 <b-navbar-brand href="/">
                     <img src="/images/logo.png" alt="logo">
                 </b-navbar-brand>

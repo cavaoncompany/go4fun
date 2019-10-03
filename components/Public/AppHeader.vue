@@ -55,7 +55,7 @@ export default {
    
 }
 
-@media (max-width: 575px) {
+@media  (max-width: 768px) {
   #header {
     display: none;
   }

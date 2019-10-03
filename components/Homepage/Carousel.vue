@@ -106,7 +106,11 @@ export default {
     width: 40%;
   }
 }
-
+@media (max-width: 576px) {
+  .imagebox .imagebox-desc {
+    width: 73%;
+  }
+}
 .imagebox-desc p {
   font-size: 16px;
 }
