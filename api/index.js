@@ -26,7 +26,7 @@ app.post('/contactus', (req, res)=>{
 	
 		transporter.sendMail(mailBody, function(error, info){
 			if(error) {
-				res.status(responseCode).json(response);
+				res.status(500).json(error);
 			}else {
 				res.status(200).json({'message': 'success'})
 			}
@@ -53,7 +53,7 @@ app.post('/inquiryform', (req, res)=>{
 	
 		transporter.sendMail(mailBody, function(error, info){
 			if(error) {
-				res.status(responseCode).json(response);
+				res.status(500).json(error);
 			}else {
 				res.status(200).json({'message': 'success'})
 			}

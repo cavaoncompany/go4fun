@@ -46,7 +46,10 @@
                                 </b-col>
                             </b-row>
                             <b-row>
-                                <b-button type="submit"  variant="primary"  class="formBtn"  :disabled="isDisabled">  提交   </b-button>
+                                <b-button type="submit"  variant="primary"  class="formBtn"  :disabled="isDisabled">
+                                    <span v-if="loading"><i class="fas fa-spinner fa-spin" style="color:black;"></i></span>
+                                    <span v-else>提交</span>
+                                </b-button>
                             </b-row>
                         </div>
                     </b-form>
@@ -107,7 +110,8 @@ export default {
             msg: '',
             message: '',
             errors: [],
-            isDisabled: false
+            isDisabled: false,
+            loading: false,
         }
     },
 
@@ -126,6 +130,7 @@ export default {
     },
     methods: {
         sendContactUsEmail(){
+            const data_object = this;
             if(this.name && this.phone && this.email){
               this.isDisabled = true; 
             }  
@@ -138,20 +143,23 @@ export default {
                 msg: this.msg,
                
             }).then(res =>{      
-                    if(res.data.message == "success"){
-                        this.isDisabled = false;
-                        this.message = "Thanks for contacting us";
-                        this.name="";
-                        this.phone ="";
-                        this.email="";
-                        this.msg = "";
-                    }else{
-                        this.isDisabled = false;
-                        this.errors.push(res.data.response);
-                    }  
-                }).catch(function (error){
-                   this.errors.push(error); 
-             })           
+                if(res.data.message == "success"){
+                    this.loading = false;
+                    this.isDisabled = false;
+                    this.message = "Thanks for contacting us";
+                    this.name="";
+                    this.phone ="";
+                    this.email="";
+                    this.msg = "";
+                }else{
+                    this.isDisabled = false;
+                    this.errors.push(res.data.response);
+                }  
+            }).catch(function (error){
+                data_object.isDisabled = false;
+                data_object.errors.push(error); 
+                data_object.loading = false;
+            })           
         }
     },
 }

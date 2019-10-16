@@ -1,6 +1,6 @@
 <template>
      <b-container fluid>
-        <b-container style="padding-top:3rem;" >
+        <b-container style="padding-top:3rem;">
             <b-row>
                 <b-col sm="6" class="leftSection">
                     <h4>{{productData.product_name}}</h4>
@@ -20,17 +20,11 @@
             <b-row>
                
                 <b-col>
-                <b-form class="inquiryform"
-                         @submit.prevent="sendInquiryEmail" >
-                           <div v-if="errors.length">
-                            <b>Please correct the following error(s):</b>
-                            <ul>
-                                <li v-for="error in errors" :key="error.id">{{ error }}</li>
-                            </ul>
-                        </div>
+                <b-form class="inquiryform" @submit.prevent="sendInquiryEmail" >
                     <b-col cols="12" class="formtitlestyle">
                         <h4>咨詢報價</h4>
                     </b-col> 
+
                     <div class="formcontent"> 
                     <b-row >
                         <b-form-group label="姓*" lable-for="surname" class="col-md-4">
@@ -87,9 +81,31 @@
                                 </b-form-group>
                         </b-col>
                     </b-row>
+
                     <b-row>
-                        <b-button type="submit" variant="primary" class="formBtn" :disabled="isDisabled">提交</b-button>
+                        <b-button type="submit" variant="primary" class="formBtn" :disabled="isDisabled">
+                            <span v-if="loading"><i class="fas fa-spinner fa-spin" style="color:black;"></i></span>
+                            <span v-else>提交</span>
+                        </b-button>
                     </b-row>
+
+                    <b-row class="mt-3" v-if="message_sent">
+                        <b-col sm="12">
+                            <div class="alert alert-success">{{message}}</div>
+                        </b-col>
+                    </b-row>
+                    
+                    <b-row class="mt-3" v-if="errors.length">
+                        <b-col sm="12">
+                            <div class="alert alert-danger">
+                                <b>{{message}}</b>
+                                <ul>
+                                    <li v-for="error in errors" :key="error.id">{{ error }}</li>
+                                </ul>
+                            </div>
+                        </b-col>
+                    </b-row>
+                    
                     </div>
                 </b-form>
                 </b-col>
@@ -118,7 +134,9 @@ export default {
             remark:'',
             isDisabled: false,
             message: "",
+            message_sent: false,
             errors:[],
+            loading: false,
         }
     },
 
@@ -128,11 +146,16 @@ export default {
 
     methods:{
         sendInquiryEmail(){
+            const data_object = this;
             if(this.surname && this.firstname && this.email && this.phone &&this.startDate && this.startCity && this.visitorNo){
               this.isDisabled = true; 
             }  
             this.message  = "";
+            this.message_sent = false;
+            this.errors = [];
+            this.loading = true;
             const token = this.$recaptcha.execute('login');
+
             axios.post("/api/sendemail/inquiryform", {
                 surname:this.surname,
                 firstname: this.firstname,
@@ -146,16 +169,37 @@ export default {
                 remark: this.remark,
                
             }).then(res =>{  
-                    if(res.data.message == "success"){
-                        this.isDisabled = false;
-                        this.message = "Thanks for contacting us";
-                    }else{
-                        this.isDisabled = false;
-                        this.errors.push(res.data.response);
-                    }  
-                }).catch(function (error){
-                   this.errors.push(error); 
-             })           
+                if(res.data.message == "success"){
+                    this.isDisabled = false;
+                    this.message = "Thanks for contacting us!";
+                    this.message_sent = true;
+                    this.loading = false;
+                    this.reset_form();
+                }else{
+                    console.log(res.data)
+                    this.message = "Please correct the following error(s):";
+                    this.isDisabled = false;
+                    this.errors.push(res.data.response);
+                    this.loading = false;
+                }  
+            }).catch(function (error){
+                data_object.message = "An error was encountered:";
+                data_object.isDisabled = false;
+                data_object.errors.push(error); 
+                data_object.loading = false;
+            })           
+        },
+        reset_form(){
+            this.surname = '';
+            this.firstname = '';
+            this.email = '';
+            this.phone = '';
+            this.startDate = '';
+            this.startCity = '';
+            this.visitorNo = '';
+            this.sex = '';
+            this.birth = '';
+            this.remark = '';
         }
     }
 }
