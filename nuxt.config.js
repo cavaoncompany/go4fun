@@ -5,6 +5,7 @@ const pkg = require('./package')
 module.exports = {
   mode: 'universal',
   server: {
+    // "host": "0.0.0.0",
     port: 3668, // default: 3000
   },
   /*
@@ -60,7 +61,10 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ["~plugins/bootstrap.js"],
+  plugins: [
+    "~plugins/ga.js",
+    "~plugins/bootstrap.js"
+  ],
 
   /*
   ** Nuxt.js modules
@@ -86,5 +90,9 @@ module.exports = {
     
     extend(config, ctx) {
     }
-  }
+  },
+
+  env: {
+    API_URL: process.env.API_URL
+  },
 }

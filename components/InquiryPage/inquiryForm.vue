@@ -182,7 +182,6 @@ export default {
                     this.loading = false;
                     this.reset_form();
                 }else{
-                    console.log(res.data)
                     this.message = "Please correct the following error(s):";
                     this.isDisabled = false;
                     this.errors.push(res.data.response);

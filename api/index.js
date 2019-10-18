@@ -107,7 +107,6 @@ app.post('/inquiryform', (req, res)=>{
 		}
 	})
 	.catch(function (error) {
-		console.log(error);
 		res.status(500).json({'message': 'An unexpected error was encountered'});
 	});	
 			
