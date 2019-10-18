@@ -18,11 +18,11 @@ app.post('/contactus', (req, res)=>{
 				pass: response.data.password,
 			}
 		});
-		
+		console.log(response.data)
 		if(req.body.email && req.body.phone && req.body.name){
 			let mailBody = {
 				from: req.body.email,
-				to: process.env.Email_To,
+				to: response.data.contact_email,
 				subject: `Sending Email from ${req.body.name}`,
 				text: `Contact Form Submission Recieved
 						Name: ${req.body.name}
@@ -70,7 +70,7 @@ app.post('/inquiryform', (req, res)=>{
 		if(req.body.email && req.body.phone && req.body.firstname){
 			let mailBody = {
 				from: req.body.email,
-				to: process.env.Email_To,
+				to: response.data.enquiry_email,
 				subject: `Sending inquiry Email from ${req.body.firstname}`,
 				text:  `Enquiry Recieved
 						Name: ${req.body.firstname} ${req.body.surname}
