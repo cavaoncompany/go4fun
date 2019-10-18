@@ -42,11 +42,11 @@
 
                      <b-row >
                         <b-form-group label="電話*" lable-for="phone" class="col-md-4">
-                            <b-form-input id="phone" required type="number" v-model="phone"></b-form-input>
+                            <b-form-input id="phone" required type="tel" v-model="phone"></b-form-input>
                         </b-form-group> 
                        
                         <b-form-group label="出發日期*" lable-for="startDate" class="col-md-4">
-                            <b-form-input id="startDate" required type="text" v-model="startDate"></b-form-input>
+                            <b-form-input id="startDate" required type="date" v-model="startDate"></b-form-input>
                         </b-form-group>  
 
                         <b-form-group label="出發城市*" lable-for="startCity" class="col-md-4">
@@ -56,11 +56,12 @@
 
                     <b-row >
                         <b-form-group label="旅客人數*" lable-for="visitorNo" class="col-md-4">
-                            <b-form-input id="visitorNo" required type="number" v-model="visitorNo"></b-form-input>
+                            <b-form-input id="visitorNo" required type="number" v-model="visitorNo" min="1"></b-form-input>
                         </b-form-group> 
                        
                         <b-form-group label="性別" lable-for="sex" class="col-md-4">
-                            <b-form-input id="sex"  type="text" v-model="sex"></b-form-input>
+                            <!-- <b-form-input id="sex"  type="text" v-model="sex"></b-form-input> -->
+                            <b-form-select id="sex" v-model="sex" :options="sex_options"></b-form-select>
                         </b-form-group>  
 
                         <b-form-group label="出生日期" lable-for="birth" class="col-md-4">
@@ -137,6 +138,11 @@ export default {
             message_sent: false,
             errors:[],
             loading: false,
+            sex_options: [
+                { value: 'Male', text: "Male" },
+                { value: 'Female', text: "Female" },
+            ],
+
         }
     },
 

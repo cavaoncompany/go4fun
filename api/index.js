@@ -21,7 +21,16 @@ app.post('/contactus', (req, res)=>{
 			from: req.body.email,
 			to: process.env.Email_To,
 			subject: `Sending Email from ${req.body.name}`,
-			text: `this is the message from ${req.body.msg}, contact number is ${req.body.phone}`
+			text: `Contact Form Submission Recieved
+Name: ${req.body.name}
+Email: ${req.body.email}
+Contact Number: ${req.body.phone}
+Message: ${req.body.msg}`,
+			html:  `<p><strong>Contact Form Submission Recieved</strong></p>
+					<p><strong>Name:</strong> ${req.body.name}</p>
+					<p><strong>Email:</strong> ${req.body.email}</p>
+					<p><strong>Contact Number:</strong> ${req.body.phone}</p>
+					<p><strong>Message:</strong> ${req.body.msg}</p>`
 		};
 	
 		transporter.sendMail(mailBody, function(error, info){
@@ -46,9 +55,27 @@ app.post('/inquiryform', (req, res)=>{
 			from: req.body.email,
 			to: process.env.Email_To,
 			subject: `Sending inquiry Email from ${req.body.firstname}`,
-			text: `This is the message from ${req.body.firstname} ${req.body.surname}, contact number is ${req.body.phone} start date is ${req.body.startDate} and the city is ${req.body.startCity} 
-					visitor Number: ${req.body.visitorNo} 
-					remark:${req.body.remark}  `
+			text:  `Enquiry Recieved
+Name: ${req.body.firstname} ${req.body.surname}
+Email: ${req.body.email}
+Contact Number: ${req.body.phone}
+Sex: ${req.body.sex}
+DOB: ${req.body.birth}
+Departure Date: ${req.body.startDate}
+Departure City: ${req.body.startCity}
+Visitor Number: ${req.body.visitorNo}
+Remark: ${req.body.remark}`,
+
+			html:  `<p><strong>Enquiry Recieved</strong></p>
+					<p><strong>Name:</strong> ${req.body.firstname} ${req.body.surname}</p>
+					<p><strong>Email:</strong> ${req.body.email}</p>
+					<p><strong>Contact Number:</strong> ${req.body.phone}</p>
+					<p><strong>Sex:</strong> ${req.body.sex}</p>
+					<p><strong>DOB:</strong> ${req.body.birth}</p>
+					<p><strong>Departure Date:</strong> ${req.body.startDate}</p>
+					<p><strong>Departure City:</strong> ${req.body.startCity}</p>
+					<p><strong>Visitor Number:</strong> ${req.body.visitorNo}</p>
+					<p><strong>Remark:</strong> ${req.body.remark}</p>`
 		};
 	
 		transporter.sendMail(mailBody, function(error, info){

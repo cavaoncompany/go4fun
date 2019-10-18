@@ -6,21 +6,12 @@
                     <b-form class="contactusform" 
                             @submit.prevent="sendContactUsEmail"      
                     >
-                        <div v-if="errors.length">
-                            <b>Please correct the following error(s):</b>
-                            <ul>
-                                <li v-for="error in errors" :key="error.id">{{ error }}</li>
-                            </ul>
-                        </div>
                         <b-row >
                             <h4>聯系我們</h4>
                         </b-row>
-                        <b-row v-if="message.length">
-                            <h5  class="pl-4">{{message}}</h5>
-                        </b-row>
                         <div class="formcontent">
                             <b-row>
-                                <b-col md="6">
+                                <b-col md="12">
                                     <b-form-group  label="姓名*" lable-for="name" >
                                         <b-form-input name="name"  v-model="name"  required  ></b-form-input>
                                     </b-form-group>   
@@ -34,7 +25,7 @@
                                 </b-col> 
                                 <b-col md="6">
                                     <b-form-group   label="電話*"   lable-for="phone" >
-                                        <b-form-input name="phone"  required   type="number"   v-model="phone" ></b-form-input> 
+                                        <b-form-input name="phone"  required   type="tel"   v-model="phone" ></b-form-input> 
                                     </b-form-group>  
                                 </b-col>
                             </b-row>
@@ -50,6 +41,21 @@
                                     <span v-if="loading"><i class="fas fa-spinner fa-spin" style="color:black;"></i></span>
                                     <span v-else>提交</span>
                                 </b-button>
+                            </b-row>
+                            <b-row v-if="errors.length">
+                                <b-col sm="12">
+                                    <div class="alert alert-danger">
+                                        <b>Please correct the following error(s):</b>
+                                        <ul>
+                                            <li v-for="error in errors" :key="error.id">{{ error }}</li>
+                                        </ul>
+                                    </div>
+                                </b-col>
+                            </b-row>
+                            <b-row v-if="message.length">
+                                <b-col sm="12">
+                                    <div class="alert alert-success">{{message}}</div>
+                                </b-col>
                             </b-row>
                         </div>
                     </b-form>
@@ -132,7 +138,8 @@ export default {
         sendContactUsEmail(){
             const data_object = this;
             if(this.name && this.phone && this.email){
-              this.isDisabled = true; 
+                this.loading = true;
+                this.isDisabled = true; 
             }  
             this.message  = "";
             const token = this.$recaptcha.execute('login');
@@ -153,6 +160,7 @@ export default {
                     this.msg = "";
                 }else{
                     this.isDisabled = false;
+                    this.loading = false;
                     this.errors.push(res.data.response);
                 }  
             }).catch(function (error){
@@ -190,7 +198,9 @@ export default {
         
     }
 
-  #contactus legend, .contactinfoform p, .contentStyle{
+  /* #contactus legend,  */
+  .contactinfoform p, 
+  .contentStyle{
         font-size:13px !important;
         color:#3c3c3c;
         font-family: 'FangPingRegular';
@@ -208,11 +218,11 @@ export default {
     }
 
     #contactus .contactusform .formBtn{
-        margin-top:2rem;
+        margin-top:1rem;
         margin-left:1rem;
         padding:0.5rem 3rem;
         background-color: #103a5b;
-        margin-bottom:4rem;
+        margin-bottom:1rem;
     }
 
     #contactus .contactinfoform h5{
