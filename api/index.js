@@ -7,6 +7,11 @@ var bodyparser = require("body-parser");
 var app = express();
 const apiUrl = process.env.API_URL + '/api';
 
+  // parse application/x-www-form-urlencoded
+  app.use(bodyparser.urlencoded({ extended: false }))
+  // parse application/json
+  app.use(bodyparser.json())
+
 app.post('/contactus', (req, res)=>{
 	axios.get(apiUrl+'/settings/mail')
 	.then(function (response) {
@@ -18,7 +23,6 @@ app.post('/contactus', (req, res)=>{
 				pass: response.data.password,
 			}
 		});
-		console.log(response.data)
 		if(req.body.email && req.body.phone && req.body.name){
 			let mailBody = {
 				from: req.body.email,
@@ -48,7 +52,6 @@ app.post('/contactus', (req, res)=>{
 		}
 	})
 	.catch(function (error) {
-		console.log(error);
 		res.status(500).json({'message': 'An unexpected error was encountered'});
 	});		
 })
