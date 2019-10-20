@@ -141,7 +141,6 @@ export default {
                 this.loading = true;
                 this.isDisabled = true; 
                 this.errors=[];
-                this.msg='';
             }  
             this.message  = "";
             const token = this.$recaptcha.execute('login');
