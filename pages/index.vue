@@ -52,7 +52,14 @@ export default {
 						hero_banner_image: `${apiUrl}/storage/${item.hero_banner_image}`,
 						product_code: item.product.product_code,
 						product_slug:item.product.slug,	
-						state_slug: item.product.state.slug					
+						state_slug: item.product.state.slug,
+
+						// New	
+						product: {
+							name: item.product.product_name,
+							duration: item.product.duration,
+							sales_price: item.product.sales_price,	
+						}	
 			}
 		})			
 			data.aboutusImg = `${apiUrl}/storage/${data.aboutusImg}`

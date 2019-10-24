@@ -22,13 +22,14 @@
 
             <div class="imagebox-desc">
                 <div class="desc-display">
-                  <h5>
-                      {{card.title}}
-                  </h5>
-                  <h4 class="mt-4">
-                    {{numberWithCommas(card.sales_price)}}
-                    <span style="font-size:14px; color:#337AB2;">/人起</span>
-                  </h4>
+                  <div class="desc-duration" v-if="typeof card.product.duration == 'number' && card.product.duration > 0">
+                    <p class="d-flex">
+                      <span class="desc-duration-days">{{card.product.duration}}天</span>
+                      <span class="desc-duration-nights" v-if="card.product.duration - 1 > 0">{{card.product.duration -1}}夜</span>
+                    </p>
+                  </div>
+                  <h5>{{card.product.name}}</h5>
+                  <h4 class="mt-4">${{numberWithCommas(card.sales_price)}}</h4>
                 </div>
              
             </div>
