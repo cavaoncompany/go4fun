@@ -14,9 +14,27 @@
                 </section>
                 <section>
                     <div class="social">
-                    <i class="fab">&#xf39e;</i>
-                    <i class="fab fa-weixin" @click="showORCode = !showORCode"></i>
-                    <img v-if="showORCode" src="images/wechat.png" class="qrcode" alt="wechat qr"/>
+                        <a v-if="social.facebook" :href="social.facebook" target="_blank"><i class="fab">&#xf39e;</i></a>
+                        <a v-if="social.instagram" :href="social.instagram" target="_blank"><i class="fab">&#xf16d;</i></a>
+                        <a v-if="social.linkedin" :href="social.linkedin" target="_blank"><i class="fab">&#xf0e1;</i></a>
+                        <a v-if="social.twitter" :href="social.twitter" target="_blank"><i class="fab">&#xf099;</i></a>
+                        <i v-if="social.wechat_qr_image" class="fab fa-weixin" @click="showModal = true"></i>
+                    </div>
+
+                    <div v-if="showModal && social.wechat_qr_image">
+                        <transition name="modal">
+                            <div class="modal-mask" @click="showModal = false">
+                                <div id="modal_wechat" class="modal-wrapper">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img :src="social.wechat_qr_image" alt="wechat qr"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
                     </div>
                    
                 </section>
@@ -30,12 +48,30 @@
 </template>
 
 <script>
+import axios from 'axios'
+const apiUrl = process.env.API_URL || 'http://localhost:80'
 export default {
     data(){
         return {
+            social: {},
             showORCode: false,
+            showModal: false,
         }
-    }
+    }, 
+    
+    async mounted() {
+        let {data} = await axios.get(`${apiUrl}/api/settings/social`);
+        console.log(data)
+        this.social = data;
+        
+        // TEMP
+        if(typeof this.social.wechat_qr_image == 'undefined'){
+            this.social.wechat_qr_image = "/images/wechat-qr.png";
+        }
+        // TEMP
+
+        return {social: data};
+    },
 }
 </script>
 
@@ -126,6 +162,30 @@ i.fab {
   }
 } */
 
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: table;
+  transition: opacity .3s ease;
+}
 
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#modal_wechat.modal-wrapper .modal-dialog{
+    text-align: center;
+}
+
+#modal_wechat.modal-wrapper .modal-content{
+    display: inline-flex;
+    width: auto;
+}
 
 </style>
