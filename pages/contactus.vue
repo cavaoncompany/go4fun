@@ -133,7 +133,8 @@ export default {
 
      async asyncData({redirect}) {
          try {
-            let {data} = await axios.get(`${apiUrl}/api/business-info`);
+            let {data} = await axios.get(`${apiUrl}/api/settings/business-info`);
+            console.log('test', data);
             return {business_info: data}
          } catch (error) {
              console.log(error);
