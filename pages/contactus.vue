@@ -64,27 +64,37 @@
                     <b-form>
                         <h4>公司信息</h4>
                         <div class="formcontent">
-                            <b-col>
+                            <b-col v-if="business_info.hotline">
                                 <h5>咨詢熱線</h5>
-                                <p>{{basicInfos.hotline}}</p>
+                                <p>{{business_info.hotline}}</p>
                             </b-col>
-                            <b-col>
+
+                            <b-col v-if="business_info.emergency_contact">
                                 <h5>緊急電話</h5>
-                                <p>{{basicInfos.emergence_contact}}</p>
+                                <p>{{business_info.emergency_contact}}</p>
                             </b-col>
-                            <b-col>
+
+                            <b-col v-if="business_info.email">
                                 <h5>電郵地址</h5>
-                                <p>{{basicInfos.email}}</p>
+                                <p>{{business_info.email}}</p>
                             </b-col>
-                            <b-col>
+
+                            <b-col v-if="business_info.address_1">
                                 <h5>店鋪地址</h5>
-                                <p>{{basicInfos.address}}</p>
+                                <p>
+                                    <span v-if="business_info.address_1">{{business_info.address_1}}</span>
+                                    <span v-if="business_info.address_2">, {{business_info.address_2}}</span>
+                                    <span v-if="business_info.suburb">, {{business_info.suburb}}</span>
+                                    <span v-if="business_info.state">, {{business_info.state}}</span>
+                                    <span v-if="business_info.country">, {{business_info.country}}</span>
+                                </p>
                             </b-col>
-                            <b-col>
+
+                            <b-col v-if="business_info.trading_hours">
                                 <h5>工作時間</h5>
                                 <b-row class="contentStyle">
                                     <b-col>
-                                        <span v-html="basicInfos.trading_hours"></span>
+                                        <span v-html="business_info.trading_hours"></span>
                                     </b-col>
                                 </b-row>
                             </b-col>
@@ -109,7 +119,7 @@ export default {
 	},
     data(){
         return{
-            basicInfos: {},
+            business_info: {},
             name: '',
             email: '',
             phone: '',
@@ -123,8 +133,8 @@ export default {
 
      async asyncData({redirect}) {
          try {
-            let {data} = await axios.get(`${apiUrl}/api/basicInfos`);
-            return {basicInfos: data}
+            let {data} = await axios.get(`${apiUrl}/api/business-info`);
+            return {business_info: data}
          } catch (error) {
              console.log(error);
          }

@@ -1,6 +1,5 @@
 <template>
 	<div id="homepagestyle">
-		
 		<Carousel :carousel="carouselData"/>
 		<SpecialDeals />
 		<PopularTours />
@@ -27,8 +26,8 @@ export default {
 	head: {
 		title: 'Go4fun home page 🚀',
 		meta: [
-		{ hid: 'description', name: 'description', content: 'go4fun 旅游 悉尼 澳大利亚' }
-			],
+			{ hid: 'description', name: 'description', content: 'go4fun 旅游 悉尼 澳大利亚' }
+		],
 	},
 
 	data(){
@@ -138,7 +137,6 @@ export default {
 #homepagestyle{
 	font-family: 'FangPingMedium';
 }
-
 
 .btn-to-top {
   width: 60px;
