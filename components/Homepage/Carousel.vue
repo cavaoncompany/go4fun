@@ -44,7 +44,6 @@
 export default {
   props: ["carousel"],
   mounted() {
-      console.log(this.carousel);
   },
   methods: {
     numberWithCommas(x) {

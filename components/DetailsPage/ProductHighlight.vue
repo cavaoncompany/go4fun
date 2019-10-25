@@ -69,7 +69,6 @@ export default {
 			if (direction === 1 && !this.atEndOfList) {
 				this.currentOffset -= this.paginationFactor;
 			} else if (direction === -1 && !this.atHeadOfList) {
-                console.log()
 				this.currentOffset += this.paginationFactor;
 			}
         },

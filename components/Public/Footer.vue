@@ -61,7 +61,6 @@ export default {
     
     async mounted() {
         let {data} = await axios.get(`${apiUrl}/api/settings/social`);
-        console.log(data)
         this.social = data;
         
         // TEMP
