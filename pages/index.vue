@@ -45,26 +45,26 @@ export default {
 			let carouselData = await axios.get(`${apiUrl}/api/getHeroBannerProducts`);
 	
 			let carousel = carouselData.data.map((item)=>{
-			return {	
-				 		id: item.id,
-			 			title: item.title,
-						sales_price: item.product.sales_price,
-						hero_banner_image: `${apiUrl}/storage/${item.hero_banner_image}`,
-						product_code: item.product.product_code,
-						product_slug:item.product.slug,	
-						state_slug: item.product.state.slug,
+				return {	
+					id: item.id,
+					title: item.title,
+					sales_price: item.product.sales_price,
+					hero_banner_image: `${apiUrl}/storage/${item.hero_banner_image}`,
+					product_code: item.product.product_code,
+					product_slug:item.product.slug,	
+					state_slug: item.product.state.slug,
 
-						// New	
-						product: {
-							name: item.product.product_name,
-							duration: item.product.duration,
-							sales_price: item.product.sales_price,	
-						}	
-			}
-		})			
+					// New	
+					product: {
+						name: item.product.product_name,
+						duration: item.product.duration,
+						sales_price: item.product.sales_price,	
+					}	
+				}
+			})			
 			data.aboutusImg = `${apiUrl}/storage/${data.aboutusImg}`
-			return {aboutusData: data, carouselData: carousel}  			
-		} catch {
+			return {aboutusData: data, carouselData: carousel}
+		} catch (error) {
 			error({message: "we can't find the resource for you"})
             return {status: 400}
 		}
@@ -77,20 +77,22 @@ export default {
 		try {
 			const {data} = await axios.get(`${apiUrl}/api/specialdeals`)
         	data.forEach(item => { 
-            store.commit('productSummary/add', {
-                id: item.product.id,
-				product_name: item.product.product_name,
-				sales_price: item.product.sales_price,
-				price: item.product.price,
-				duration: item.product.duration,
-				card_image: `${apiUrl}/storage/${item.product.card_image}`,
-				product_code: item.product.product_code,
-				state_id: item.product.state_id,
-				state_slug:item.product.state.slug,
-				product_slug: item.product.slug
-            })
-		})
-		} catch {
+				if(item.product != null && item.product.state != null){
+					store.commit('productSummary/add', {
+						id: item.product.id,
+						product_name: item.product.product_name,
+						sales_price: item.product.sales_price,
+						price: item.product.price,
+						duration: item.product.duration,
+						card_image: `${apiUrl}/storage/${item.product.card_image}`,
+						product_code: item.product.product_code,
+						state_id: item.product.state_id,
+						state_slug:item.product.state.slug,
+						product_slug: item.product.slug
+					})
+				}
+			})
+		} catch (error) {
 			error({message: "we can't find the resource for you"})
             return {status: 400}
 		}
@@ -101,22 +103,22 @@ export default {
 		try {
 			const popular_data = await axios.get(`${apiUrl}/api/populartours`)
         	popular_data.data.forEach(item => { 
-		
-				store.commit('productSummary/addPopularTours', {
-					id: item.product.id,
-					product_name: item.product.product_name,
-					sales_price: item.product.sales_price,
-					price: item.product.price,
-					duration: item.product.duration,
-					card_image: `${apiUrl}/storage/${item.product.card_image}`,
-					product_code: item.product.product_code,
-					state_id: item.product.state_id,
-					state_slug:item.product.state.slug,
-					product_slug: item.product.slug
-					
-				})
-		})
-		} catch {
+				if(item.product != null && item.product.state != null){
+					store.commit('productSummary/addPopularTours', {
+						id: item.product.id,
+						product_name: item.product.product_name,
+						sales_price: item.product.sales_price,
+						price: item.product.price,
+						duration: item.product.duration,
+						card_image: `${apiUrl}/storage/${item.product.card_image}`,
+						product_code: item.product.product_code,
+						state_id: item.product.state_id,
+						state_slug:item.product.state.slug,
+						product_slug: item.product.slug
+					})
+				}
+			})
+		} catch (error) {
 			error({message: "we can't find the resource for you"})
             return {status: 400}
 		}
