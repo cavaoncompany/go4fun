@@ -97,6 +97,9 @@ export default {
             policy: this.productDetails.policy,
             travel_document: this.productDetails.travel_document,
             duration : this.productDetails.duration,
+            departure_dates: this.productDetails.departure_dates, //Departure Dates
+            pickup_points: this.productDetails.pickup_points, //Pickup Point
+
         }
         this.spotsData = this.productDetails.spots;
 

@@ -14,12 +14,14 @@
             </b-col>
             <b-col>接送服务： <span class="content">{{introData.pick_up_service}}</span></b-col>
             <b-col>餐食安排： <span class="content">{{introData.meals}}</span></b-col>
+            <b-col>出發日期: <span class="content">{{introData.departure_dates}}</span></b-col> <!-- Departure Dates -->
         </b-row>
         
         <b-row>
             <b-col>游玩时长： <span class="content">{{introData.duration}}日</span></b-col>
             <b-col>退改政策： <span class="content">{{introData.policy}}</span></b-col>
             <b-col>行程凭证： <span class="content">{{introData.travel_document}}</span></b-col>
+            <b-col>集合點: <span class="content">{{introData.pickup_points}}</span></b-col> <!-- Pickup Point -->
         </b-row>
     </b-container>
 </template>
